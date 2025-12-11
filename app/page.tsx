@@ -1,5 +1,4 @@
 import { getProfile, getProjects } from "@/lib/actions"
-import Link from "next/link"
 import Image from "next/image"
 import { SafeImage } from "@/components/safe-image"
 import { SocialIcon } from "@/components/social-icons"
@@ -51,12 +50,6 @@ export default async function HomePage() {
                 enabled={profile?.enableBackgroundMusic ?? true}
               />
               <DarkModeToggle />
-              <Link
-                href="/admin"
-                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 text-sm transition-colors duration-200"
-              >
-                Admin
-              </Link>
             </div>
           </nav>
         </div>

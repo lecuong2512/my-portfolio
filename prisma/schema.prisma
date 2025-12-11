@@ -17,6 +17,9 @@ model Profile {
   bio            String?
   email          String
   profession     String?  // Nghề nghiệp
+  skills         String?  // Kỹ năng (comma-separated hoặc mô tả)
+  tools          String?  // Ứng dụng/Tools đã sử dụng
+  certifications String?  // Chứng chỉ
   province       String?  // Tỉnh thành
   schoolOrCompany String? // Tên trường hoặc công ty
   gender         String?  // Giới tính

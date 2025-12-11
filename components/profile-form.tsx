@@ -98,6 +98,48 @@ export function ProfileForm({ profile }: ProfileFormProps) {
             />
           </div>
 
+          <div className="md:col-span-2">
+            <label htmlFor="skills" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Kỹ năng (Skills)
+            </label>
+            <textarea
+              id="skills"
+              name="skills"
+              rows={3}
+              defaultValue={profile?.skills || ""}
+              placeholder="Ví dụ: React, Next.js, TypeScript, Node.js..."
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <label htmlFor="tools" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Ứng dụng/Tools đã sử dụng
+            </label>
+            <textarea
+              id="tools"
+              name="tools"
+              rows={3}
+              defaultValue={profile?.tools || ""}
+              placeholder="Ví dụ: VSCode, Git, Figma, Docker..."
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <label htmlFor="certifications" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Chứng chỉ (Certifications)
+            </label>
+            <textarea
+              id="certifications"
+              name="certifications"
+              rows={3}
+              defaultValue={profile?.certifications || ""}
+              placeholder="Ví dụ: AWS SAA, IELTS 7.5, Google UX, ..."
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+
           <div>
             <label htmlFor="province" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Tỉnh/Thành phố

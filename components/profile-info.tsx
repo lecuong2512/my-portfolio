@@ -10,7 +10,16 @@ export function ProfileInfo({ profile }: ProfileInfoProps) {
   if (!profile) return null
 
   // Check if there's any info to display
-  const hasInfo = profile.email || profile.phone || profile.age || profile.gender || profile.province || profile.schoolOrCompany
+  const hasInfo =
+    profile.email ||
+    profile.phone ||
+    profile.age ||
+    profile.gender ||
+    profile.province ||
+    profile.schoolOrCompany ||
+    profile.skills ||
+    profile.tools ||
+    profile.certifications
 
   if (!hasInfo) return null
 
@@ -93,6 +102,60 @@ export function ProfileInfo({ profile }: ProfileInfoProps) {
                 </div>
                 <p className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-1">School/Company</p>
                 <p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-300 transition-colors">{profile.schoolOrCompany}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Skills Card */}
+        {profile.skills && (
+          <div className="group h-full">
+            <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-50 to-purple-100/50 dark:from-purple-900/20 dark:to-purple-800/20 p-6 border border-purple-200/50 dark:border-purple-700/30 hover:border-purple-400/50 dark:hover:border-purple-600/50 transition-all duration-300 hover:shadow-lg dark:hover:shadow-purple-900/20 h-full flex flex-col">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition-all duration-300"></div>
+              <div className="relative flex-1 space-y-2">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg mb-3 group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <p className="text-xs font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wider mb-1">Skills</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white whitespace-pre-line">{profile.skills}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tools Card */}
+        {profile.tools && (
+          <div className="group h-full">
+            <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-50 to-slate-100/50 dark:from-slate-900/20 dark:to-slate-800/20 p-6 border border-slate-200/50 dark:border-slate-700/30 hover:border-slate-400/50 dark:hover:border-slate-600/50 transition-all duration-300 hover:shadow-lg dark:hover:shadow-slate-900/20 h-full flex flex-col">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-slate-500/10 rounded-full blur-2xl group-hover:bg-slate-500/20 transition-all duration-300"></div>
+              <div className="relative flex-1 space-y-2">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-slate-500 to-slate-600 text-white shadow-lg mb-3 group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6M12 9v6m-9 3h18" />
+                  </svg>
+                </div>
+                <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Tools</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white whitespace-pre-line">{profile.tools}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Certifications Card */}
+        {profile.certifications && (
+          <div className="group h-full">
+            <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100/50 dark:from-emerald-900/20 dark:to-emerald-800/20 p-6 border border-emerald-200/50 dark:border-emerald-700/30 hover:border-emerald-400/50 dark:hover:border-emerald-600/50 transition-all duration-300 hover:shadow-lg dark:hover:shadow-emerald-900/20 h-full flex flex-col">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all duration-300"></div>
+              <div className="relative flex-1 space-y-2">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-lg mb-3 group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m1 9H8a2 2 0 01-2-2V5a2 2 0 012-2h6l4 4v10a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-1">Certifications</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white whitespace-pre-line">{profile.certifications}</p>
               </div>
             </div>
           </div>

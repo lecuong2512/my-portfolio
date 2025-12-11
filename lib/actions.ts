@@ -26,6 +26,9 @@ export async function updateProfile(formData: FormData) {
     const bio = formData.get("bio") as string
     const email = formData.get("email") as string
     const profession = formData.get("profession") as string
+    const skills = formData.get("skills") as string
+    const tools = formData.get("tools") as string
+    const certifications = formData.get("certifications") as string
     const province = formData.get("province") as string
     const schoolOrCompany = formData.get("schoolOrCompany") as string
     const gender = formData.get("gender") as string
@@ -55,6 +58,9 @@ export async function updateProfile(formData: FormData) {
           bio: bio || null,
           email,
           profession: profession || null,
+          skills: skills || null,
+          tools: tools || null,
+          certifications: certifications || null,
           province: province || null,
           schoolOrCompany: schoolOrCompany || null,
           gender: gender || null,
@@ -80,6 +86,9 @@ export async function updateProfile(formData: FormData) {
           bio: bio || null,
           email,
           profession: profession || null,
+          skills: skills || null,
+          tools: tools || null,
+          certifications: certifications || null,
           province: province || null,
           schoolOrCompany: schoolOrCompany || null,
           gender: gender || null,
