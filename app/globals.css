@@ -1,0 +1,276 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Root styles */
+html {
+  scroll-behavior: smooth;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* Base transitions */
+* {
+  @apply transition-colors duration-200;
+}
+
+@keyframes blob {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* Decorative 2D/3D animations and utilities */
+@keyframes float-small {
+  0% { transform: translateY(0) translateZ(0); }
+  50% { transform: translateY(-8px) translateZ(8px); }
+  100% { transform: translateY(0) translateZ(0); }
+}
+
+@keyframes float-slow {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotateY(0deg) rotateZ(0deg); }
+  to { transform: rotateY(360deg) rotateZ(360deg); }
+}
+
+.animated-shape {
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+}
+
+.shape-1 { animation: float-small 6s ease-in-out infinite; }
+.shape-2 { animation: float-slow 9s ease-in-out infinite; }
+.shape-3 { animation: float-small 7s ease-in-out infinite; }
+.shape-rot { animation: spin-slow 18s linear infinite; }
+
+.scene {
+  perspective: 1000px;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.shape-circle {
+  border-radius: 9999px;
+}
+
+.shape-blur {
+  filter: blur(14px) saturate(120%);
+  opacity: 0.9;
+}
+
+/* Card tilt utility (useful for hover 3D effect on project cards) */
+.card-tilt {
+  transform-origin: center;
+  transition: transform 250ms ease, box-shadow 250ms ease;
+  will-change: transform;
+}
+
+.card-tilt:hover {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(8px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+/* subtle shimmer for accent lines */
+@keyframes shimmer {
+  0% { background-position: -200px 0 }
+  100% { background-position: calc(200px + 100%) 0 }
+}
+
+.shimmer-line {
+  background: linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.06) 100%);
+  background-size: 200px 100%;
+  animation: shimmer 2.5s linear infinite;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+/* Music button animations */
+@keyframes pulse-music {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-pulse-music {
+  animation: pulse-music 2s ease-in-out infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 1.5s ease-in-out infinite;
+}
+
+/* Dark mode gradients */
+.dark .bg-gradient-to-br {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+}
+
+/* Improved dark mode backgrounds */
+.dark {
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-tertiary: #334155;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+}
+
+/* Form inputs styling for dark mode */
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark input[type="tel"],
+.dark input[type="url"],
+.dark input[type="number"],
+.dark textarea,
+.dark select {
+  @apply bg-gray-700 dark:bg-gray-700 border-gray-600 focus:border-blue-500 focus:ring-blue-500/30;
+}
+
+/* Smooth background transitions */
+html {
+  @apply transition-colors duration-500;
+}
+
+body {
+  @apply transition-colors duration-500;
+}
+
+/* Dark mode smooth scroll */
+html.dark {
+  scroll-behavior: smooth;
+}
+
+/* Blur effect for dark mode */
+.dark .backdrop-blur-md {
+  background-color: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+}
+
+/* Enhanced glassmorphism effect */
+.glass-dark {
+  @apply bg-gray-800/30 dark:bg-gray-900/30 backdrop-blur-lg border border-gray-700/50 dark:border-gray-800/50;
+}
+
+.glass-light {
+  @apply bg-white/30 backdrop-blur-lg border border-white/30;
+}
+
+/* Custom scrollbar for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Page load animation - subtle fade + lift for the whole page container */
+@keyframes page-load {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.page-load {
+  opacity: 0;
+  transform: translateY(8px) scale(0.995);
+  animation: page-load 620ms cubic-bezier(.22,.9,.35,1) 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-load {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Ensure header stays fixed */
+.sticky-header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9999 !important;
+  width: 100% !important;
+}
