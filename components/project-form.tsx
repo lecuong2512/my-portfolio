@@ -3,8 +3,9 @@
 import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { createProject, updateProject } from "@/lib/actions"
-import { ImageUpload } from "./image-upload"
+import { UploadButton } from "@uploadthing/react"
 import { Toast } from "./toast"
+import type { OurFileRouter } from "@/app/api/uploadthing/core"
 
 interface Project {
   id: string
@@ -28,6 +29,7 @@ export function ProjectForm({ project, onSubmitCallback }: ProjectFormProps) {
   const [imageUrl, setImageUrl] = useState(project?.image || "")
   const [submitting, setSubmitting] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null)
+  const [uploadType, setUploadType] = useState<"url" | "file">("url")
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -117,26 +119,89 @@ export function ProjectForm({ project, onSubmitCallback }: ProjectFormProps) {
       </div>
 
       <div>
-        <label htmlFor="image" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Image URL
+        <label htmlFor="image" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Image
         </label>
+        
+        {/* Toggle between URL and File Upload */}
+        <div className="mb-4">
+          <div className="inline-flex rounded-md shadow-sm" role="group">
+            <button
+              type="button"
+              onClick={() => setUploadType("url")}
+              className={`px-4 py-2 text-sm font-medium border rounded-l-lg transition-colors ${
+                uploadType === "url"
+                  ? "bg-blue-600 text-white border-blue-600"
+                  : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600"
+              }`}
+            >
+              Paste URL
+            </button>
+            <button
+              type="button"
+              onClick={() => setUploadType("file")}
+              className={`px-4 py-2 text-sm font-medium border rounded-r-lg transition-colors ${
+                uploadType === "file"
+                  ? "bg-blue-600 text-white border-blue-600"
+                  : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600"
+              }`}
+            >
+              Upload File
+            </button>
+          </div>
+        </div>
+
+        {/* URL Input */}
+        {uploadType === "url" && (
+          <input
+            id="image"
+            name="image"
+            type="text"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+            placeholder="https://example.com/image.jpg"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white mb-3"
+          />
+        )}
+
+        {/* File Upload */}
+        {uploadType === "file" && (
+          <div className="mb-3">
+            <UploadButton<OurFileRouter>
+              endpoint="imageUploader"
+              onClientUploadComplete={(res) => {
+                if (res && res[0]?.url) {
+                  setImageUrl(res[0].url)
+                }
+              }}
+              onUploadError={(error: Error) => {
+                setToast({ message: `Upload failed: ${error.message}`, type: "error" })
+              }}
+            />
+          </div>
+        )}
+
+        {/* Hidden input to store the image URL for form submission */}
         <input
-          id="image"
+          type="hidden"
           name="image"
-          type="text"
           value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white mb-2"
         />
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Or upload an image:</p>
-        <ImageUpload
-          onUploadComplete={(url) => {
-            setImageUrl(url)
-            const input = document.getElementById("image") as HTMLInputElement
-            if (input) input.value = url
-          }}
-          currentImage={imageUrl || undefined}
-        />
+
+        {/* Image Preview */}
+        {imageUrl && (
+          <div className="mt-3">
+            <img
+              src={imageUrl}
+              alt="Preview"
+              className="w-full max-w-md h-48 object-cover rounded-md border border-gray-300 dark:border-gray-600"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement
+                target.style.display = "none"
+              }}
+            />
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

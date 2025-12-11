@@ -2,7 +2,18 @@
 const nextConfig = {
   images: {
     domains: [],
-    remotePatterns: [],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'wutheringwaves.shop',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+        pathname: '/**',
+      },
+    ],
   },
 }
 

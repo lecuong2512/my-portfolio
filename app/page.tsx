@@ -1,6 +1,7 @@
 import { getProfile, getProjects } from "@/lib/actions"
 import Link from "next/link"
 import Image from "next/image"
+import { SafeImage } from "@/components/safe-image"
 import { SocialIcon } from "@/components/social-icons"
 import { BackgroundMusic } from "@/components/background-music"
 import { DarkModeToggle } from "@/components/dark-mode-toggle"
@@ -141,7 +142,7 @@ export default async function HomePage() {
               >
                 {project.image && (
                   <div className="relative h-48 w-full overflow-hidden">
-                    <Image
+                    <SafeImage
                       src={project.image}
                       alt={project.title}
                       fill
@@ -209,7 +210,7 @@ export default async function HomePage() {
               >
                 {project.image && (
                   <div className="relative h-48 w-full overflow-hidden">
-                    <Image
+                    <SafeImage
                       src={project.image}
                       alt={project.title}
                       fill
