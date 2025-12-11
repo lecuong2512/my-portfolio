@@ -10,7 +10,6 @@ export default function AnimatedShapes() {
     if (!el) return
 
     function onMove(e: MouseEvent) {
-      // --- DÒNG SỬA LỖI Ở ĐÂY ---
       // Kiểm tra chắc chắn el tồn tại rồi mới tính toán
       if (!el) return 
       
@@ -30,7 +29,18 @@ export default function AnimatedShapes() {
   }, [])
 
   return (
-    <div aria-hidden className="scene" ref={containerRef} style={{'--mx': '0deg' as any, '--my': '0deg' as any, '--tx': '0px' as any, '--ty': '0px' as any}}>
+    <div 
+      aria-hidden 
+      className="scene" 
+      ref={containerRef} 
+      // --- SỬA LỖI Ở ĐÂY: Thêm 'as any' cho cả object để TypeScript bỏ qua kiểm tra ---
+      style={{
+        '--mx': '0deg', 
+        '--my': '0deg', 
+        '--tx': '0px', 
+        '--ty': '0px'
+      } as any}
+    >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {/* subtle large blurred blob */}
         <div className="animated-shape shape-2 shape-rot shape-blur shape-circle" style={{width: 420, height: 380, background: 'radial-gradient(circle at 30% 20%, rgba(139,92,246,0.18), rgba(59,130,246,0.06))', left: '-80px', top: '-60px', position: 'absolute', transform: 'translateZ(-80px)'}} />
