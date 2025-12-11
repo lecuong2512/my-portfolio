@@ -27,7 +27,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.49.2",
-    "three": "^0.182.0",
+    "three": "^0.181.2",
     "ws": "^8.18.3"
   },
   "devDependencies": {
