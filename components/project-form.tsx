@@ -4,8 +4,8 @@ import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { createProject, updateProject } from "@/lib/actions"
 import { UploadButton } from "@uploadthing/react"
+import type { OurFileRouter } from "@/app/api/uploadthing/core"
 import { Toast } from "./toast"
-// Lưu ý: Không cần import OurFileRouter để truyền vào component nữa
 
 interface Project {
   id: string
@@ -167,10 +167,9 @@ export function ProjectForm({ project, onSubmitCallback }: ProjectFormProps) {
         {/* File Upload */}
         {uploadType === "file" && (
           <div className="mb-3">
-            {/* ĐÃ SỬA: Xóa <OurFileRouter> đi */}
-            <UploadButton
+            <UploadButton<OurFileRouter, "imageUploader">
               endpoint="imageUploader"
-              onClientUploadComplete={(res) => {
+              onClientUploadComplete={(res: { url: string }[] | undefined) => {
                 if (res && res[0]?.url) {
                   setImageUrl(res[0].url)
                   setToast({ message: "Upload completed!", type: "success" })
