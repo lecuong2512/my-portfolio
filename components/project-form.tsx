@@ -3,7 +3,6 @@
 import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { createProject, updateProject } from "@/lib/actions"
-import { useUploadThing } from "@/lib/uploadthing"
 import { Toast } from "./toast"
 
 interface Project {
@@ -28,29 +27,6 @@ export function ProjectForm({ project, onSubmitCallback }: ProjectFormProps) {
   const [imageUrl, setImageUrl] = useState(project?.image || "")
   const [submitting, setSubmitting] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null)
-  const [uploadType, setUploadType] = useState<"url" | "file">("url")
-  const { startUpload, isUploading } = useUploadThing("imageUploader", {
-    onClientUploadComplete: (res: { url: string }[] | undefined) => {
-      const url = res?.[0]?.url
-      if (url) {
-        setImageUrl(url)
-        setToast({ message: "Upload completed!", type: "success" })
-      }
-    },
-    onUploadError: (error: Error) => {
-      setToast({ message: `Upload failed: ${error.message}`, type: "error" })
-    },
-  })
-
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files
-    if (!files || files.length === 0) return
-    try {
-      await startUpload(Array.from(files))
-    } catch (error) {
-      setToast({ message: error instanceof Error ? error.message : "Upload failed", type: "error" })
-    }
-  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -144,108 +120,16 @@ export function ProjectForm({ project, onSubmitCallback }: ProjectFormProps) {
           Image
         </label>
         
-        {/* Toggle between URL and File Upload */}
-        <div className="mb-4">
-          <div className="inline-flex rounded-md shadow-sm" role="group">
-            <button
-              type="button"
-              onClick={() => setUploadType("url")}
-              className={`px-4 py-2 text-sm font-medium border rounded-l-lg transition-colors ${
-                uploadType === "url"
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600"
-              }`}
-            >
-              Paste URL
-            </button>
-            <button
-              type="button"
-              onClick={() => setUploadType("file")}
-              className={`px-4 py-2 text-sm font-medium border rounded-r-lg transition-colors ${
-                uploadType === "file"
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600"
-              }`}
-            >
-              Upload File
-            </button>
-          </div>
-        </div>
-
-        {/* URL Input */}
-        {uploadType === "url" && (
-          <input
-            id="image"
-            name="image"
-            type="text"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-            placeholder="https://example.com/image.jpg"
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white mb-3"
-          />
-        )}
-
-        {/* File Upload */}
-        {uploadType === "file" && (
-          <div className="mb-3">
-            <label
-              className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-md cursor-pointer transition-colors ${
-                isUploading
-                  ? "border-gray-400 bg-gray-100 text-gray-500 dark:border-gray-600 dark:bg-gray-800"
-                  : "border-gray-300 hover:border-blue-500 hover:bg-blue-50 dark:border-gray-600 dark:hover:border-blue-400 dark:hover:bg-gray-700"
-              }`}
-            >
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleFileChange}
-                disabled={isUploading}
-              />
-              <div className="flex items-center gap-2 text-sm font-medium">
-                {isUploading ? (
-                  <>
-                    <svg
-                      className="animate-spin h-5 w-5 text-blue-600"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                      ></path>
-                    </svg>
-                    <span>Đang tải lên...</span>
-                  </>
-                ) : (
-                  <>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-5 h-5 text-blue-600"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                    </svg>
-                    <span>Click to upload</span>
-                  </>
-                )}
-              </div>
-            </label>
-          </div>
-        )}
+        {/* Image URL Input */}
+        <input
+          id="image"
+          name="image"
+          type="url"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+          placeholder="https://example.com/image.jpg"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white mb-3"
+        />
 
         {/* Hidden input to store the image URL for form submission */}
         <input
@@ -337,7 +221,7 @@ export function ProjectForm({ project, onSubmitCallback }: ProjectFormProps) {
         )}
         <button
           type="submit"
-          disabled={submitting || isUploading}
+          disabled={submitting}
           className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-6 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-50 transition-colors"
         >
           {submitting ? "Saving..." : project ? "Update Project" : "Create Project"}
