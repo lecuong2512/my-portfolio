@@ -10,9 +10,14 @@ export default function AnimatedShapes() {
     if (!el) return
 
     function onMove(e: MouseEvent) {
+      // --- DÒNG SỬA LỖI Ở ĐÂY ---
+      // Kiểm tra chắc chắn el tồn tại rồi mới tính toán
+      if (!el) return 
+      
       const rect = el.getBoundingClientRect()
       const x = (e.clientX - rect.left) / rect.width - 0.5
       const y = (e.clientY - rect.top) / rect.height - 0.5
+      
       // map to small rotation/translation
       el.style.setProperty('--mx', String((x * 12).toFixed(2) + 'deg'))
       el.style.setProperty('--my', String((y * -8).toFixed(2) + 'deg'))
